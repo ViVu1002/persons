@@ -4,9 +4,7 @@
             <img src="http://placehold.it/50/30a5ff/fff" class="img-responsive" alt="">
         </div>
         <div class="profile-usertitle">
-            @if(auth()->check())
-                <div class="profile-usertitle-name">{{ auth()->user()->name }}</div>
-            @endif
+                <div class="profile-usertitle-name"><h6>{{ auth()->user()->email }}</h6></div>
             <div class="profile-usertitle-status"><span class="indicator label-success"></span>@lang('index.Online')</div>
         </div>
         <div class="clear"></div>

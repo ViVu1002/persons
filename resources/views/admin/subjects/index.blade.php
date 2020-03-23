@@ -16,7 +16,9 @@
                 <div class="login-panel panel panel-default"
                      style="height: 50px; padding-top: 10px; margin-bottom: 50px">
                     <div style="display: inline;">
-                        <a style="font-size: 20px; margin-left: 20px;" href="{{route('subject.create')}}">Create</a>
+                        @can('create')
+                            <a style="font-size: 20px; margin-left: 20px;" href="{{route('subject.create')}}">Create</a>
+                        @endcan
                     </div>
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success" style="margin-top: 8px">
@@ -45,9 +47,9 @@
                         <th>STT</th>
                         <th>Name</th>
                         <th>Description</th>
-                        @if(auth()->user()->admin == 1)
+                        @can('delete')
                             <th>Action</th>
-                        @endif
+                        @endcan
                     </tr>
                     </thead>
                     <tbody>
@@ -57,14 +59,14 @@
                             <td>{{$subject->name}}</td>
                             <td>{{$subject->description}}</td>
                             <td>
-                                @if(auth()->user()->admin == 1)
+                                @can('delete')
                                     <form action="{{ route('subject.destroy',$subject->id) }}" method="POST">
                                         <a class="btn btn-info" href="{{ route('subject.edit',$subject->id) }}">Edit</a>
                                         {{csrf_field()}}
                                         <input name="_method" type="hidden" value="DELETE">
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
-                                @endif
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

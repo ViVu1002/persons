@@ -25,14 +25,15 @@ Route::get('logout', 'UserController@logout');
 Route::get('/auth/google', 'UserController@redirect');
 Route::get('/auth/google/callback', 'UserController@callback');
 
-Route::get('user/create','UserController@create');
-Route::post('user/store','UserController@store');
+Route::get('user/create', 'UserController@create');
+Route::post('user/store', 'UserController@store');
 
 Route::group(['middleware' => ['auth']], function () {
     //subjects
     Route::resource('subject', 'SubjectController');
 //users
-    Route::resource('user', 'UserController')->except('store','create');
+    Route::resource('user', 'UserController')->except('store', 'create');
+    Route::delete('user/delete/{user_id}/{id}', 'PersonController@deleteUser');
 //password
     Route::get('change-password', 'UserController@changePassword');
     Route::post('change-password', 'UserController@changePasswordStore');
@@ -45,7 +46,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('person-update/{id}', 'PersonController@getEditPerson');
     Route::post('person-update/{id}', 'PersonController@updateEditPerson');
     Route::delete('person/delete/{person_id}/{subject_id}', 'PersonController@deletePoint');
-    Route::delete('user/delete/{user_id}/{id}', 'UserController@deleteUser');
 //faculty
     Route::resource('faculty', 'FacultyController');
 //point

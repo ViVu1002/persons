@@ -39,7 +39,7 @@
                     <input type="hidden" value="{{$user->password}}" name="password">
                     <input type="hidden" name="re-password" value="1">
                     <input type="hidden" name="social_id" value="{{$user->social_id}}">
-                    <div class="form-group">
+                    <div class="form-group" style="width: 49%;margin-left: 20px;">
                         <strong>Role:</strong>
                         {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
                     </div>

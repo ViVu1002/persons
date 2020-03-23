@@ -39,6 +39,7 @@ return [
     'English' => 'English',
     'Vietnamese' => 'Việt Nam',
     'Email' => 'Email',
-    'No students' => 'Không có sinh viên nào'
+    'No students' => 'Không có sinh viên nào',
+    'Date' => 'Ngày sinh'
 ]
 ?>

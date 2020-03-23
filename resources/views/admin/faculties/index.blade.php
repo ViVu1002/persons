@@ -16,7 +16,10 @@
                 <div class="login-panel panel panel-default"
                      style="height: 50px; padding-top: 10px; margin-bottom: 50px">
                     <div style="display: inline;">
-                        <a style="font-size: 20px; margin-left: 20px;" href="{{ route('faculty.create') }}">Create</a>
+                        @can('create')
+                            <a style="font-size: 20px; margin-left: 20px;"
+                               href="{{ route('faculty.create') }}">Create</a>
+                        @endcan
                     </div>
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success" style="margin-top: 8px">
@@ -37,9 +40,9 @@
                         <th>STT</th>
                         <th>Name</th>
                         <th>Description</th>
-                        @if(auth()->user()->admin == 1)
+                        @can('create')
                             <th>Action</th>
-                        @endif
+                        @endcan
                     </tr>
                     </thead>
                     <tbody>
@@ -49,14 +52,14 @@
                             <td>{{$faculty->name}}</td>
                             <td>{{$faculty->description}}</td>
                             <td>
-                                @if(auth()->user()->admin == 1)
+                                @can('delete')
                                     {!! Form::open(['route' => ['faculty.destroy',$faculty->id], 'method' => 'POST']) !!}
                                     <a class="btn btn-info" href="{{ route('faculty.edit',$faculty->id) }}">Edit</a>
                                     @csrf
                                     <input name="_method" type="hidden" value="DELETE">
                                     {!! Form::submit('Delete',['class' => 'btn btn-danger']) !!}
                                     {!! Form::close() !!}
-                                @endif
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

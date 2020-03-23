@@ -25,7 +25,6 @@ class RequestUser extends FormRequest
     {
         $validation = [
             'email' => 'required|email|unique:users',
-            'admin' => 'required',
             'password' => 'required|min:5',
             're-password' => 'required'
         ];

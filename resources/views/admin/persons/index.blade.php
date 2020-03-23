@@ -15,8 +15,10 @@
                 <div class="login-panel panel panel-default"
                      style="height: 50px; padding-top: 10px; margin-bottom: 50px">
                     <div style="display: inline;">
-                        <a style="font-size: 20px; margin-left: 20px;"
-                           href="{{url('person/create')}}">@lang('index.Create')</a>
+                        @can('create')
+                            <a style="font-size: 20px; margin-left: 20px;"
+                               href="{{url('person/create')}}">@lang('index.Create')</a>
+                        @endcan
                     </div>
                     <div class="dropdown" style="float: right">
                         <button class="btn btn-secondary dropdown-toggle" style="margin-top: -10px" type="button"
@@ -117,11 +119,11 @@
                             <th>@lang('index.Address')</th>
                             <th>@lang('index.Phone')</th>
                             <th>@lang('index.Action')</th>
-                            @if(auth()->user()->admin == 1)
+                            @can('create')
                                 <a href="/test"
                                    style="display: inline-block;margin: -32px 0 15px 1050px;height: 40px"
                                    class="btn btn-info">@lang('index.Send Email')</a>
-                            @endif
+                            @endcan
                         </tr>
                         </thead>
                         <tbody id="posts-crud">
@@ -142,13 +144,19 @@
                                 <td style="width: 100px">{{$student->phone}}</td>
                                 <td>
                                     {!! Form::open(['route' => ['person.destroy',$student->id],'method' => 'POST']) !!}
-                                    @if(app()->getLocale() == 'en')
+                                    @if($student->slug == '')
                                         <a class="btn btn-success"
-                                           href="{{ url($student->slug,'person/en') }}">@lang('index.Show')</a>
+                                           href="{{ url('/person-update',$student->id) }}">@lang('index.Show')</a>
                                     @else
-                                        <a class="btn btn-success"
-                                           href="{{ url($student->slug,'person/vi') }}">@lang('index.Show')</a>
+                                        @if(app()->getLocale() == 'en')
+                                            <a class="btn btn-success"
+                                               href="{{ url($student->slug,'person/en') }}">@lang('index.Show')</a>
+                                        @else
+                                            <a class="btn btn-success"
+                                               href="{{ url($student->slug,'person/vi') }}">@lang('index.Show')</a>
+                                        @endif
                                     @endif
+
                                     @if(auth()->user()->admin == 1)
                                         <a data-toggle="modal" data-target="#ajax-crud-modal" id="edit-post"
                                            data-id="{{ $student->id }}"

@@ -31,11 +31,11 @@ class RequestPerson extends FormRequest
             'faculty_id' => 'required',
             'date' => 'required|before:today',
             'gender' => 'required',
-            'image' => 'required|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpg,jpeg,png,gif,svg',
         ];
         if (!empty($this->id)) {
             $validation['email'] = 'email|unique:persons,id,' . $this->id;
-            $validation['image'] = 'mimes:jpg,jpeg,png,gif,svg|max:2048';
+            $validation['image'] = 'mimes:jpg,jpeg,png,gif,svg';
         }
         return $validation;
     }

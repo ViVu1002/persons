@@ -56,19 +56,20 @@
                                 @endif
                             </td>
                             <td>
-                                <form action="{{ url('user.destroy',$user->id) }}" method="POST">
+                                {!! Form::open(['route' => ['user.destroy',$user->id]]) !!}
                                     <a class="btn btn-info" href="{{ route('user.edit',$user->id) }}">Edit students</a>
                                     <a class="btn btn-primary" href="{{url('change-update-password',$user->id)}}">Edit
                                         password</a>
                                     @csrf
                                     <input name="_method" type="hidden" value="DELETE">
                                     <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
+                            {!! Form::close() !!}
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
+                {!! $users->render() !!}
             </div>
         </div>
     </div><!--/.row-->

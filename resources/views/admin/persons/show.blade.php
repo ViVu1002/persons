@@ -46,17 +46,12 @@
                         @lang('index.Languages')
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        @if(app()->getLocale() == '/en' || app()->getLocale() == '/vi')
-                            <a class="dropdown-item en">@lang('index.English')</a>
-                            <a class="dropdown-item vi">@lang('index.Vietnamese')</a>
-                        @else
-                            <div style="margin-left: 20px">
-                                <a class="dropdown-item" id="en">@lang('index.English')</a>
-                            </div>
-                            <div style="margin-left: 20px">
-                                <a class="dropdown-item" id="vi">@lang('index.Vietnamese')</a>
-                            </div>
-                        @endif
+                        <div style="margin-left: 20px">
+                            <a class="dropdown-item eng" id="en">@lang('index.English')</a>
+                        </div>
+                        <div style="margin-left: 20px">
+                            <a class="dropdown-item viet" id="vi">@lang('index.Vietnamese')</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -114,7 +109,7 @@
                                 <td>{{$subject->pivot->point}}</td>
                                 <td>
                                     @if(auth()->user()->admin == 1)
-                                        {!! Form::open(['url' => ['person/delete',$person->id,$subject->id],'method' => 'delete']) !!}
+                                        {!! Form::open(['url' => ['user/delete',$person->id,$subject->id],'method' => 'delete']) !!}
                                         @csrf
                                         @method('DELETE')
                                         {!! Form::submit('Delete',['class' => 'btn btn-danger']) !!}

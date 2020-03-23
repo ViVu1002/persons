@@ -23,6 +23,11 @@
         @endif
         <div class="login-panel panel panel-default">
             <div class="panel-heading">Register</div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
             <div class="panel-body">
                 {!! Form::open(['url' => ['user/store'],'enctype' => 'multipart/form-data','files'=>true]) !!}
                 <div class="form-group">
@@ -56,12 +61,13 @@
                         {{$errors->first('re-password')}}
                     </div>
                 @endif
-                <div class="checkbox">
-                    <label>
-                        <input name="admin" type="hidden" value="0">
-                        <input name="admin" type="checkbox" value="1">Have you to be admin?
-                    </label>
-                </div>
+                <input name="admin" type="hidden">
+{{--                <div class="checkbox">--}}
+{{--                    <label>--}}
+{{--                        <input name="admin" type="hidden" value="0">--}}
+{{--                        <input name="admin" type="checkbox" value="1">Have you to be admin?--}}
+{{--                    </label>--}}
+{{--                </div>--}}
                 <div class="form-group">
                     <strong>Role:</strong>
                     {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}

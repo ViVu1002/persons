@@ -59,7 +59,7 @@ class UserController extends Controller
     public function store(RequestUser $request)
     {
         $data = $request->all();
-        $data['admin'] ? 1 : 0;
+        $data['roles'] == ['Admin'] ? $data['admin'] = 1 : $data['admin'] = 0;
         if ($data['password'] == $data['re-password']) {
             $user = $this->userRepository->create($data);
             $user->assignRole($request['roles']);
@@ -135,10 +135,15 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-       $this->userRepository->delete($id);
+        $user = User::findOrFail($id);
+        $persons = User::where('id',$id)->get();
+        foreach ($persons as $person){
+            DB::table('persons')->where('user_id',$person->id)->delete();
+        }
+        User::where('id',$user->id)->delete();
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
         return redirect()->back()->with('success', 'Delete user success');
     }
-
 
     public function createLogin()
     {
@@ -159,11 +164,12 @@ class UserController extends Controller
                         $id = $value->id;
                         $slug = $value->slug;
                     }
-                    if ($slug == ''){
-                        return redirect( '/person-update/'.$id)->with('info', 'Login success');
-                    }else{
+                    if ($slug == '') {
+                        return redirect('/person-update/' . $id)->with('info', 'Login success');
+                    } else {
                         return redirect($slug . '/person/en')->with('info', 'Login success');
                     }
+                    return redirect('/person-update/' . $id)->with('info', 'Login success');
                 } else {
                     return redirect()->back()->with('error', 'Login error');
                 }
@@ -193,7 +199,7 @@ class UserController extends Controller
                         $slug = $value->slug;
                     }
                 }
-                return redirect($slug.'/person/en')->with('info', 'Login success');
+                return redirect($slug . '/person/en')->with('info', 'Login success');
             } else {
                 $newUser = User::create([
                     'email' => $user->email,
@@ -259,12 +265,5 @@ class UserController extends Controller
     {
         Auth::logout();
         return redirect('/login/user')->with('success', 'Logout success!');
-    }
-
-    public function deleteUser($user_id,$id){
-        $person = Person::findOrFail($user_id);
-        dd($person);
-        $person->user()->detach($id);
-        return redirect()->back()->with('success','Delete person success');
     }
 }

@@ -56,7 +56,7 @@ $(document).ready(function () {
 
     $('body', function (evt) {
         var url = window.location.href;
-        var eng = url.replace('/vi','/eng');
+        var eng = url.replace('/vi','/en');
         var viet = url.replace('/en','/vi');
         var vi = url.replace('Fen','Fvi');
         var en = url.replace('Fvi','Fen');
@@ -65,7 +65,7 @@ $(document).ready(function () {
         $('#viet').attr('href',viet);
         $('#vi').attr('href',vi);
         $('#en').attr('href',en);
-        $('.vi').attr('href',eng);
-        $('.en').attr('href',viet);
+        $('.eng').attr('href',eng);
+        $('.viet').attr('href',viet);
     })
 });

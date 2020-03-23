@@ -40,5 +40,6 @@ return [
     'Vietnamese' => 'Vietnamese',
     'Email' => 'Email',
     'No students' => 'No students',
+    'Date' => 'Date'
 ]
 ?>
